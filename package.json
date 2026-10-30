@@ -1,0 +1,31 @@
+{
+  "name": "cse341-re-books-api",
+  "version": "1.0.0",
+  "description": "a project to better understand webservices",
+  "homepage": "https://github.com/RyanEakin/cse341-RE-books-API#readme",
+  "bugs": {
+    "url": "https://github.com/RyanEakin/cse341-RE-books-API/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RyanEakin/cse341-RE-books-API.git"
+  },
+  "author": "Ryan Eakin",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "start": "node --env-file=.env server.js",
+    "dev": "nodemon --env-file=.env server.js"
+
+  },
+  "dependencies": {
+    "express": "^5.3.0"
+  },
+  "devDependencies": {
+    "eslint": "^10.14.0",
+    "nodemon": "^3.1.14"
+  }
+}
