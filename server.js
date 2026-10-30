@@ -1,4 +1,5 @@
 import app from './app.js';
+import { connectToDb } from './src/db/connect.js';
 import { fileURLToPath } from 'url';
 import path from 'path';
 
@@ -51,12 +52,20 @@ app.use((req, res, next) => {
 ///////////////////////////////////////////
 //            Server-Start               //
 ///////////////////////////////////////////
+const startServer = async() => {
 
-app.listen(PORT, async () => {
-  try {
-    console.log(`Server is running at http://127.0.0.1:${PORT}`);
-    console.log(`Environment: ${NODE_ENV}`);
-  } catch (error) {
-    console.error('Error connecting to the database:', error);
-  }
-});
+    try {
+      connectToDb();
+
+      app.listen(PORT, () => {
+      console.log(`Server is running at http://127.0.0.1:${PORT}`);
+      console.log(`Environment: ${NODE_ENV}`);
+    });
+
+      } catch (error) {
+      console.error('Error connecting to the database:', error);
+      process.exit(1);
+    }
+  };
+
+await startServer();
