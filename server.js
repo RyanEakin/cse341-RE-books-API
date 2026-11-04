@@ -56,10 +56,7 @@ const startServer = async() => {
 
     try {
       await connectToDb();
-
-      //const books = await getDb().collection('books').find({}).toArray(); // to renable remember to reimport getDb()
-      //console.log('Book documents:', books); //db-connection testing code
-
+      
       app.listen(PORT, () => {
       console.log(`Server is running at http://127.0.0.1:${PORT}`);
       console.log(`Environment: ${NODE_ENV}`);
