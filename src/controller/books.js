@@ -40,8 +40,8 @@ const PostBookHandler = async(req,res) => {
         //        return res.status(400).json({message: 'required field is missing or authorId already exists'});
         //    }
         //});
-        //test-values for CreateBook = "b4","a4","test-book","1990-08-21"
 
+        //test-values for CreateBook = "b4","a4","test-book","1990-08-21"
         const book = await CreateBook("b4","a4","test-book","1990-08-21");
         return res.status(201).json(book);
 
@@ -67,6 +67,7 @@ const PutBookByIdHandler = async(req,res) => {
         //    }
         //});
 
+        // test values for UpdateBody = "b4","a4","test-book","1990-09-23"
         const updateOp = await UpdateBookById("b4","a4","test-book","1990-09-23");
         return res.status(200).json(book);
 
@@ -87,10 +88,7 @@ const DeleteBookByIdHandler = async(req,res) => {
         }
 
         const removeOp = await RemoveBookById(bookId);
-
-        if(book === removeOp) {
-            return res.status(204);
-        }
+        return res.status(204).json({ message: 'Book removed successfully' });
 
     } catch (error) {
         console.error('DELETE /book/:id failed:', error.message);
