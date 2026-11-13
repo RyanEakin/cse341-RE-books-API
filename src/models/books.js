@@ -12,4 +12,21 @@ const getBookById = async (bookId) => {
     return book;
 }; //this collects the book/record from the MongoDB database by it's bookId
 
-export { getAllBooks, getBookById };
+const CreateBook = async (bookId, authorId, title, pubDate) => {
+    const book = await getDb().collection('books').insertOne({id: bookId, authorId: authorId, title: title, publicationDate: pubDate});
+    return book;
+}; //this creates the book/record for the MongoDB database by it's required values
+
+const UpdateBookById = async (bookId, authorId, title, pubDate) => {
+    const book = await getDb().collection('books').updateOne( {id: bookId}, {$set: {authorId: authorId, title: title, publicationDate: pubDate}} );
+    return book;
+}; //this updates the book/record for the MongoDB database
+
+
+const RemoveBookById = async (bookId) => {
+    const book = await getDb().collection('books').deleteOne({ id: bookId });
+}; //this removes the book/record for the MongoDB database
+
+
+
+export { getAllBooks, getBookById, CreateBook, UpdateBookById, RemoveBookById };
