@@ -15,7 +15,7 @@ const CreateBook = async (bookId, authorId, title, pubDate) => {
     const book = await getDb().collection('books').insertOne({id: bookId, authorId: authorId, title: title, publicationDate: pubDate});
 
     const updatedBook = await getBookById(bookId);
-    const returnedBook = {"id":updatedBook.id, "authorId":updatedBook.authorId, "title":updatedBook.title, "publicationDate":updatedBook.publicationDate};
+    const returnedBook = {"id":updatedBook.bookId, "authorId":updatedBook.authorId, "title":updatedBook.title, "publicationDate":updatedBook.publicationDate};
 
     return returnedBook;
 }; //this creates the book/record for the MongoDB database by it's required values
@@ -35,6 +35,4 @@ const RemoveBookById = async (bookId) => {
     const book = await getDb().collection('books').deleteOne({ id: bookId });
 }; //this removes the book/record for the MongoDB database
 
-
-
-export { getAllBooks, getBookById, CreateBook, UpdateBookById, RemoveBookById };
+export { getAllBooks, getBookById, CreateBook, UpdateBookById, RemoveBookById};

@@ -1,4 +1,5 @@
 import { getAllBooks, getBookById, CreateBook, UpdateBookById, RemoveBookById} from '../models/books.js';
+import {getAuthorById} from '../models/book.js';
 
 const GetBooksHandler = async(req,res) => {
     try {
@@ -47,16 +48,20 @@ const PostBookHandler = async(req,res) => {
         const bookCheck = await getBookById(bookId) || "";
         // checks to see if the bookId already exists. also makes it empty if it doesn't
 
-        console.log(bookCheck);
+        //console.log(bookCheck);
         //used to verify that the same bookId won't be used for duplicate records
 
         if (bookCheck.id === bookId) {
             return res.status(409).json({message: "bookId already exists"});
         }
 
-        //if (authorId) {
-        //    return res.status(404).json({message: "authorId does not match and existing author"});
-        //}
+        const authorCheck = await getAuthorById(authorId);
+        
+        if (!authorCheck) {
+            return res.status(404).json({message: "authorId does not match and existing author"});
+        }
+
+        // work on above section when dealing with author-related-issue
 
         //test-values for CreateBook = "b4","a4","test-book","1990-08-21"
         const book = await CreateBook(bookId,authorId,title,publicationDate);
@@ -76,6 +81,14 @@ const PutBookByIdHandler = async(req,res) => {
         if (!bookId) {
             return res.status(400).json({message: 'required field is missing'});
         }; // gotta remember that this is for REQUIRED fields only, NOT optional ones!
+
+        const authorCheck = await getAuthorById(authorId);
+        
+        if (!authorCheck) {
+            return res.status(404).json({message: "authorId does not match and existing author"});
+        }
+
+        // work on above section when dealing with author-related-issue
 
         const bookCheck = await getBookById(bookId);
         // checks to see if the bookId already exists. also makes it empty if it doesn't
@@ -97,7 +110,7 @@ const PutBookByIdHandler = async(req,res) => {
 const DeleteBookByIdHandler = async(req,res) => {
     const bookId = req.params.id;
 
-    console.log(bookId);
+    //console.log(bookId);
 
     try {
         const book = await getBookById(bookId);
