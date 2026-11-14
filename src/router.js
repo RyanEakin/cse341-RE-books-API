@@ -195,7 +195,7 @@ router.put('/author/:id', PutAuthorByIdHandler);
  *       404:
  *         description: Author not found
  *       409:
- *          description: Author still has Books attributed
+ *         description: Author still has Books attributed
  *       500:
  *         description: Unable to retrieve author
  */

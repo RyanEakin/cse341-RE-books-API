@@ -1,4 +1,5 @@
 import { getDb } from "../db/connect.js";
+import { getAllBooks } from "./books.js";
 
 const getAllAuthors = async () => {
     const authors = await getDb().collection('authors').find({}).toArray();
@@ -30,9 +31,19 @@ const UpdateAuthorById = async (authorId, name, birthYear) => {
     return returnedAuthor;
 }; //this updates the author/record for the MongoDB database
 
-
 const RemoveAuthorById = async (authorId) => {
     const author = await getDb().collection('authors').deleteOne({ authorId: authorId });
 }; //this removes the author/record for the MongoDB database
 
-export { getAllAuthors, getAuthorById, CreateAuthor, UpdateAuthorById, RemoveAuthorById};
+const AuthorhasAttribution = async (authorId) => {
+    const bookList = await getAllBooks() || [];
+    
+    console.log(bookList.some((book) => book.authorId === authorId)); 
+    //used to validate that book has authors
+
+    return bookList.some((book) => book.authorId === authorId);
+    // returns true if it finds a match between the elements of the array
+    //  and the value being checked, authorId in this case. if there is a match.
+};
+
+export { getAllAuthors, getAuthorById, CreateAuthor, UpdateAuthorById, RemoveAuthorById, AuthorhasAttribution};

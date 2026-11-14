@@ -1,4 +1,4 @@
-import { getAllAuthors, getAuthorById, CreateAuthor, UpdateAuthorById, RemoveAuthorById } from "../models/authors.js";
+import { getAllAuthors, getAuthorById, CreateAuthor, UpdateAuthorById, RemoveAuthorById, AuthorhasAttribution } from "../models/authors.js";
 
 const GetAuthorsHandler = async(req,res) => {
     try {
@@ -79,7 +79,6 @@ const PutAuthorByIdHandler = async(req,res) => {
             return res.status(404).json({message: "authorId does not match an existing author"});
         }
 
-        // work on above section when dealing with author-related-issue
 
         // test values for UpdateBody = "a4","Jessica Besaide","1991"
         const updateOp = await UpdateAuthorById(authorId,name,birthYear);
@@ -101,6 +100,12 @@ const DeleteAuthorByIdHandler = async(req,res) => {
         
         if (!author) {
             return res.status(404).json({ message: 'author not found' });
+        }
+
+        const AttributionValue = await AuthorhasAttribution(authorId);
+
+        if(AttributionValue) {//if the author HAS books then it will not delete the author
+            return res.status(409).json({message: "Author still has Books attributed"});
         }
 
         const removeOp = await RemoveAuthorById(authorId);
