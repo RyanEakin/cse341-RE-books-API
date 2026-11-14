@@ -48,6 +48,14 @@ app.use((req, res, next) => {
     next();
 });
 
+///////////////////////////////////////////
+//           Error-Handling              //
+///////////////////////////////////////////
+app.use((err,req,res,next) => { //checks to see if any "trailing comma's" are in the JSON request body
+    if (err.type === "entity.parse.failed") {
+        return res.status(400).json({ message: "Invalid JSON request body" });
+    }
+}); //added this due to an unforeseen security vulnerability where the FILE paths were exposed to client
 
 ///////////////////////////////////////////
 //            Server-Start               //
