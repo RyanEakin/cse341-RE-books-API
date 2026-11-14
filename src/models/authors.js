@@ -38,10 +38,10 @@ const RemoveAuthorById = async (authorId) => {
 const AuthorhasAttribution = async (authorId) => {
     const bookList = await getAllBooks() || [];
     
-    console.log(bookList.some((book) => book.authorId === authorId)); 
+    console.log(bookList.some((book) => {return book.authorId === authorId})); 
     //used to validate that book has authors
 
-    return bookList.some((book) => book.authorId === authorId);
+    return bookList.some((book) => {return book.authorId === authorId});
     // returns true if it finds a match between the elements of the array
     //  and the value being checked, authorId in this case. if there is a match.
 };
