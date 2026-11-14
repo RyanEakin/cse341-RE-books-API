@@ -48,37 +48,41 @@ router.get('/book/:id', GetBookByIdHandler);
  * @openapi
  * /books:
  *   post:
- *     summary: create a new book
+ *     summary: Create a book
  *     tags:
  *       - Books
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         description: The custom book id, such as b1
- *         schema:
- *           type: string
- *       - in: path
- *         name: authorId
- *         required: true
- *         description: The custom book id, such as b1
- *         schema:
- *           type: string
- *       - in: path
- *         name: title
- *         required: true
- *         description: The custom book id, such as b1
- *         schema:
- *           type: string
- *       - in: path
- *         name: publicationDate
- *         required: true
- *         description: The custom book id, such as b1
- *         schema:
- *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - bookId
+ *               - authorId
+ *               - title
+ *               - publicationDate
+ *             properties:
+ *               bookId:
+ *                 type: string
+ *                 example: b4
+ *               authorId:
+ *                 type: string
+ *                 example: a4
+ *               title:
+ *                 type: string
+ *                 example: test-book
+ *               publicationDate:
+ *                 type: string
+ *                 format: date
+ *                 example: "1990-08-21"
  *     responses:
  *       201:
  *         description: Book created successfully
+ *       400:
+ *         description: required field is missing
+ *       409:
+ *         description: id already exists
  *       500:
  *         description: Unable to create book
  */
@@ -89,43 +93,42 @@ router.post('/books', PostBookHandler);
  * @openapi
  * /book/{id}:
  *   put:
- *     summary: create a new book
+ *     summary: Update a book
  *     tags:
  *       - Books
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
- *         description: The custom book id, such as b1
  *         schema:
  *           type: string
- *       - in: path
- *         name: authorId
- *         required: true
- *         description: The custom book id, such as b1
- *         schema:
- *           type: string
- *       - in: path
- *         name: title
- *         required: true
- *         description: The custom book id, such as b1
- *         schema:
- *           type: string
- *       - in: path
- *         name: publicationDate
- *         required: true
- *         description: The custom book id, such as b1
- *         schema:
- *           type: string
+ *         example: b4
+ *     requestBody:
+ *       required: false
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               authorId:
+ *                 type: string
+ *                 example: a4
+ *               title:
+ *                 type: string
+ *                 example: test-book
+ *               publicationDate:
+ *                 type: string
+ *                 format: date
+ *                 example: "1995-09-30"
  *     responses:
  *       200:
  *         description: Book returned successfully
  *       400:
- *         description: if a required field is missing or authorId does not match an existing author
+ *         description: A required field is missing or invalid
  *       404:
- *         description: Book not found
+ *         description: Book not found or authorId does not match an existing author
  *       500:
- *         description: Unable to retrieve book
+ *         description: Unable to update book
  */
 router.put('/book/:id', PutBookByIdHandler);
 

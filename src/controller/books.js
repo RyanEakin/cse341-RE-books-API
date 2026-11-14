@@ -81,9 +81,7 @@ const PostBookHandler = async(req,res) => {
         //    }
         //});
         //test-values for CreateBook = "b4","a4","test-book","1990-08-21"
-
-        const book = await CreateBook("b4","a4","test-book","1990-08-21");
->>>>>>> 8648f0d (initial-function-of-CRUD-Ops-functional-commit)
+        const book = await CreateBook(bookId,authorId,title,publicationDate);
         return res.status(201).json(book);
 
     } catch (error) {
@@ -125,19 +123,13 @@ const PutBookByIdHandler = async(req,res) => {
     try {
         const book = await getBookById(bookId);
         
-        if (!book) {
+        if (!bookCheck) {
         return res.status(404).json({ message: 'Book not found' });
         }
 
-        //book.forEach(field => { //checks if ANY fields are empty, including authorId
-        //    if (field.name === null || "") {
-        //        return res.status(400).json({message: 'required field is missing or authorId already exists'});
-        //    }
-        //});
-
-        const updateOp = await UpdateBookById("b4","a4","test-book","1990-09-23");
-        return res.status(200).json(book);
->>>>>>> 8648f0d (initial-function-of-CRUD-Ops-functional-commit)
+        // test values for UpdateBody = "b4","a4","test-book","1990-09-23"
+        const updateOp = await UpdateBookById(bookId,authorId,title,publicationDate);
+        return res.status(200).json(updateOp);
 
     } catch (error) {
         console.error('PUT /book/:id failed:', error.message);
@@ -147,6 +139,8 @@ const PutBookByIdHandler = async(req,res) => {
 
 const DeleteBookByIdHandler = async(req,res) => {
     const bookId = req.params.id;
+
+    console.log(bookId);
 
 <<<<<<< HEAD
     //console.log(bookId);

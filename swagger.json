@@ -258,7 +258,7 @@
             "description": "if a required field is missing or authorId does not match an existing author"
           },
           "404": {
-            "description": "Book not found"
+            "description": "Book not found or authorId does not match an existing author"
           },
           "500": {
             "description": "Unable to retrieve book"
